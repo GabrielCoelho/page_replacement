@@ -1,23 +1,41 @@
 extern crate page_replacement;
 
+use std::io::{self, BufRead};
+
 use page_replacement::{algorithms, load_page, utils, MemoryPage, PageReport};
-use rand::prelude::*;
 
 fn main() {
-    let mut rng = rand::thread_rng();
     let mut page_hit_order = Vec::new();
-    for x in 0..100 {
-        page_hit_order.insert(x, rng.gen_range(0, 20));
+    println!("Second Chance Paging Memory\n\nAttention: This this programm will check the Second Time algorithm three times\nwith a frame size of 3, 5 and 10: \n\nInsert the reference (with whitespaces): ");
+    let reader = io::stdin();
+    let value: Vec<u32> = reader
+        .lock()
+        .lines()
+        .next()
+        .unwrap()
+        .unwrap()
+        .split(' ')
+        .map(|s| s.trim())
+        .filter(|s| !s.is_empty())
+        .map(|s| s.parse().unwrap())
+        .collect();
+    let mut x = 0;
+    loop {
+        page_hit_order.insert(x, value[x]);
+        x += 1;
+        if x == value.len() {
+            break;
+        }
     }
     let algorithms: Vec<(
         &str,
         fn(Vec<MemoryPage>, MemoryPage, Vec<u32>) -> Vec<MemoryPage>,
     )> = vec![
-        ("Fifo", algorithms::fifo),
+        //("Fifo", algorithms::fifo),
         ("Second Chance", algorithms::second_chance),
-        ("Least Recently Use", algorithms::lru),
-        ("Not Recently Use", algorithms::nru),
-        ("Clock", algorithms::clock),
+        //("Least Recently Use", algorithms::lru),
+        //("Not Recently Use", algorithms::nru),
+        //("Clock", algorithms::clock),
     ];
     let buffer_sizes = vec![3, 5, 10];
 
