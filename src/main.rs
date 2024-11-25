@@ -6,7 +6,7 @@ use page_replacement::{algorithms, load_page, utils, MemoryPage, PageReport};
 
 fn main() {
     let mut page_hit_order = Vec::new();
-    println!("Second Chance Paging Memory\n\nAttention: This this programm will check the Second Time algorithm three times\nwith a frame size of 3, 5 and 10: \n\nInsert the reference (with whitespaces): ");
+    println!("Second Chance Page Replacement Memory\n\nAttention: This this programm will check the Second Time algorithm three times\nwith a frame size of 3, 5 and 10: \n\nInsert the reference (with whitespaces): ");
     let reader = io::stdin();
     let value: Vec<u32> = reader
         .lock()
